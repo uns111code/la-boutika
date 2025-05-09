@@ -46,6 +46,9 @@ class User
     #[ORM\OneToMany(targetEntity: ShoppingCart::class, mappedBy: 'user')]
     private Collection $shoppingCarts;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?ShoppingCart $shoppingCart = null;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -185,6 +188,28 @@ class User
                 $shoppingCart->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getShoppingCart(): ?ShoppingCart
+    {
+        return $this->shoppingCart;
+    }
+
+    public function setShoppingCart(?ShoppingCart $shoppingCart): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($shoppingCart === null && $this->shoppingCart !== null) {
+            $this->shoppingCart->setUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($shoppingCart !== null && $shoppingCart->getUser() !== $this) {
+            $shoppingCart->setUser($this);
+        }
+
+        $this->shoppingCart = $shoppingCart;
 
         return $this;
     }
