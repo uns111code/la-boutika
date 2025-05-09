@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ShoppingCartRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ShoppingCartRepository::class)]
@@ -16,8 +18,19 @@ class ShoppingCart
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\OneToOne(inversedBy: 'shoppingCart', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?User $user = null;
+
+    /**
+     * @var Collection<int, Product>
+     */
+    #[ORM\ManyToMany(targetEntity: Product::class, inversedBy: 'shoppingCarts')]
+    private Collection $Product;
+
+    public function __construct()
+    {
+        $this->Product = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -44,6 +57,30 @@ class ShoppingCart
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Product>
+     */
+    public function getProduct(): Collection
+    {
+        return $this->Product;
+    }
+
+    public function addProduct(Product $product): static
+    {
+        if (!$this->Product->contains($product)) {
+            $this->Product->add($product);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): static
+    {
+        $this->Product->removeElement($product);
 
         return $this;
     }

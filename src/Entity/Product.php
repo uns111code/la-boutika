@@ -34,11 +34,7 @@ class Product
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    /**
-     * @var Collection<int, ShoppingCart>
-     */
-    #[ORM\ManyToMany(targetEntity: ShoppingCart::class, mappedBy: 'product')]
-    private Collection $shoppingCarts;
+
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Brand $brand = null;
@@ -58,11 +54,18 @@ class Product
     #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'product')]
     private Collection $orderItems;
 
+    /**
+     * @var Collection<int, ShoppingCart>
+     */
+    #[ORM\ManyToMany(targetEntity: ShoppingCart::class, mappedBy: 'Product')]
+    private Collection $shoppingCarts;
+
     public function __construct()
     {
-        $this->shoppingCarts = new ArrayCollection();
+
         $this->productImages = new ArrayCollection();
         $this->orderItems = new ArrayCollection();
+        $this->shoppingCarts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -142,32 +145,6 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection<int, ShoppingCart>
-     */
-    public function getShoppingCarts(): Collection
-    {
-        return $this->shoppingCarts;
-    }
-
-    public function addShoppingCart(ShoppingCart $shoppingCart): static
-    {
-        if (!$this->shoppingCarts->contains($shoppingCart)) {
-            $this->shoppingCarts->add($shoppingCart);
-            $shoppingCart->addProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeShoppingCart(ShoppingCart $shoppingCart): static
-    {
-        if ($this->shoppingCarts->removeElement($shoppingCart)) {
-            $shoppingCart->removeProduct($this);
-        }
-
-        return $this;
-    }
 
     public function getBrand(): ?Brand
     {
@@ -248,6 +225,33 @@ class Product
             if ($orderItem->getProduct() === $this) {
                 $orderItem->setProduct(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ShoppingCart>
+     */
+    public function getShoppingCarts(): Collection
+    {
+        return $this->shoppingCarts;
+    }
+
+    public function addShoppingCart(ShoppingCart $shoppingCart): static
+    {
+        if (!$this->shoppingCarts->contains($shoppingCart)) {
+            $this->shoppingCarts->add($shoppingCart);
+            $shoppingCart->addProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShoppingCart(ShoppingCart $shoppingCart): static
+    {
+        if ($this->shoppingCarts->removeElement($shoppingCart)) {
+            $shoppingCart->removeProduct($this);
         }
 
         return $this;
