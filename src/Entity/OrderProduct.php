@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\OrderItemRepository;
+use App\Repository\OrderProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: OrderItemRepository::class)]
-class OrderItem
+#[ORM\Entity(repositoryClass: OrderProductRepository::class)]
+class OrderProduct
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,10 +16,10 @@ class OrderItem
     #[ORM\Column(nullable: true)]
     private ?int $quantity = null;
 
-    #[ORM\ManyToOne(inversedBy: 'orderItems')]
+    #[ORM\ManyToOne(inversedBy: 'orderProducts')]
     private ?Product $product = null;
 
-    #[ORM\ManyToOne(inversedBy: 'orderItems')]
+    #[ORM\ManyToOne(inversedBy: 'orderProducts')]
     private ?Order $orders = null;
 
     public function getId(): ?int

@@ -13,7 +13,7 @@ class ProductImage
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 1000, nullable: true)]
     private ?string $imageUrl = null;
 
     #[ORM\ManyToOne(inversedBy: 'productImages')]

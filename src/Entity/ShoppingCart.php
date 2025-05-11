@@ -22,14 +22,14 @@ class ShoppingCart
     private ?User $user = null;
 
     /**
-     * @var Collection<int, Product>
+     * @var Collection<int, ShoppingCartProduct>
      */
-    #[ORM\ManyToMany(targetEntity: Product::class, inversedBy: 'shoppingCarts')]
-    private Collection $Product;
+    #[ORM\OneToMany(targetEntity: ShoppingCartProduct::class, mappedBy: 'shoppingCart')]
+    private Collection $shoppingCartProducts;
 
     public function __construct()
     {
-        $this->Product = new ArrayCollection();
+        $this->shoppingCartProducts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -62,25 +62,31 @@ class ShoppingCart
     }
 
     /**
-     * @return Collection<int, Product>
+     * @return Collection<int, ShoppingCartProduct>
      */
-    public function getProduct(): Collection
+    public function getShoppingCartProducts(): Collection
     {
-        return $this->Product;
+        return $this->shoppingCartProducts;
     }
 
-    public function addProduct(Product $product): static
+    public function addShoppingCartProduct(ShoppingCartProduct $shoppingCartProduct): static
     {
-        if (!$this->Product->contains($product)) {
-            $this->Product->add($product);
+        if (!$this->shoppingCartProducts->contains($shoppingCartProduct)) {
+            $this->shoppingCartProducts->add($shoppingCartProduct);
+            $shoppingCartProduct->setShoppingCart($this);
         }
 
         return $this;
     }
 
-    public function removeProduct(Product $product): static
+    public function removeShoppingCartProduct(ShoppingCartProduct $shoppingCartProduct): static
     {
-        $this->Product->removeElement($product);
+        if ($this->shoppingCartProducts->removeElement($shoppingCartProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($shoppingCartProduct->getShoppingCart() === $this) {
+                $shoppingCartProduct->setShoppingCart(null);
+            }
+        }
 
         return $this;
     }

@@ -1,0 +1,3 @@
+# product:
+#     path: /latest_product
+#     controller: App\Controller\ProductController::index

@@ -40,19 +40,9 @@ class User
     #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'user')]
     private Collection $orders;
 
-    /**
-     * @var Collection<int, ShoppingCart>
-     */
-    #[ORM\OneToMany(targetEntity: ShoppingCart::class, mappedBy: 'user')]
-    private Collection $shoppingCarts;
-
-    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?ShoppingCart $shoppingCart = null;
-
     public function __construct()
     {
         $this->orders = new ArrayCollection();
-        $this->shoppingCarts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -158,58 +148,6 @@ class User
                 $order->setUser(null);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, ShoppingCart>
-     */
-    public function getShoppingCarts(): Collection
-    {
-        return $this->shoppingCarts;
-    }
-
-    public function addShoppingCart(ShoppingCart $shoppingCart): static
-    {
-        if (!$this->shoppingCarts->contains($shoppingCart)) {
-            $this->shoppingCarts->add($shoppingCart);
-            $shoppingCart->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeShoppingCart(ShoppingCart $shoppingCart): static
-    {
-        if ($this->shoppingCarts->removeElement($shoppingCart)) {
-            // set the owning side to null (unless already changed)
-            if ($shoppingCart->getUser() === $this) {
-                $shoppingCart->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getShoppingCart(): ?ShoppingCart
-    {
-        return $this->shoppingCart;
-    }
-
-    public function setShoppingCart(?ShoppingCart $shoppingCart): static
-    {
-        // unset the owning side of the relation if necessary
-        if ($shoppingCart === null && $this->shoppingCart !== null) {
-            $this->shoppingCart->setUser(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($shoppingCart !== null && $shoppingCart->getUser() !== $this) {
-            $shoppingCart->setUser($this);
-        }
-
-        $this->shoppingCart = $shoppingCart;
 
         return $this;
     }
