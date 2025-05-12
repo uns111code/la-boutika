@@ -2,10 +2,24 @@
 
 {% block title %}Product index{% endblock %}
 
-{% block body %}
-    <h1>Product index</h1>
+{% block content %}
 
-    <table class="table">
+
+    <h1>Homme</h1>
+
+    <section class="product-list">
+        {% for product in products %}
+        <article>
+            <div class="img-new-container"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image" class="img-new"></div>
+                <h2 class="title-new">{{ product.name }}</h2>
+            <div class="btn-price-new-container">
+                <h3 class="price-new">{{ product.price }}</h2>
+                <a href="#" class="btn-new">Acheter</a>
+            </div>
+        </article>
+        {% endfor %}
+    </section>
+    <!-- <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
@@ -41,5 +55,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_product_new') }}">Create new</a>
+    <a href="{{ path('app_product_new') }}">Create new</a> -->
 {% endblock %}

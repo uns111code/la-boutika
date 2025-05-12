@@ -1,17 +1,224 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}La Boutika{% endblock %}</title>
+    <script
+      src="https://kit.fontawesome.com/fdc9ecfad2.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>"
+    />
+    {% block stylesheets %} {% endblock %} {% block javascripts %} {% block
+    importmap %}{{
+      importmap("app")
+    }}{% endblock %} {% endblock %}
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+    <script>
+      const progressCircle = document.querySelector(".autoplay-progress svg");
+      const progressContent = document.querySelector(".autoplay-progress span");
+
+      const swiperEl = document.querySelector("swiper-container");
+      swiperEl.addEventListener("autoplaytimeleft", (e) => {
+        const [swiper, time, progress] = e.detail;
+        progressCircle.style.setProperty("--progress", 1 - progress);
+        progressContent.textContent = `${Math.ceil(time / 1000)}s`;
+      });
+    </script>
+  </head>
+  <body>
+    {% block body %}
+    <header>
+      <section class="logo">
+        <img src="/img/Image 16 avr. 2025, 21_53_26-min.png" alt="logo" />
+        <b>LaBoutika</b>
+      </section>
+      <section class="menu">
+        <nav>
+          <div class="search-bar">
+            <i class="fa-solid fa-bars"></i>
+            <!-- <ul>
+            <i class="fa-solid fa-xmark"></i>
+            <li><router-link to="/">Home</router-link></li>
+            <li><router-link to="/about">About</router-link></li>
+            <li><router-link to="/news">News</router-link></li>
+            <li><router-link to="/contact">Contact</router-link></li>
+          </ul> -->
+            <!-- <select name="catag" id="catag">
+            <option value="catag1">All Catagory</option>
+            <option value="catag2">catag2</option>
+            <option value="catag3">catag3</option>
+          </select> -->
+            <div class="search">
+              <input type="text" placeholder="search" />
+              <button>
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </div>
+          </div>
+          <div class="lang-cart-user">
+            <div class="flag-lang">
+              <i class="fa-regular fa-flag"></i>
+              <select name="lang" id="lang" class="lang">
+                <option value="english">English</option>
+                <option value="French">French</option>
+              </select>
+            </div>
+            <div class="cart-user">
+              <div class="cart">
+                <i class="fa-solid fa-cart-shopping"></i><span>CART</span>
+              </div>
+              <div class="user">
+                <i class="fa-solid fa-user"></i>
+                <span>LOGIN</span>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </section>
+      <section class="slider">
+            <!-- Slider main container -->
+            <swiper-container
+              class="mySwiper"
+              pagination="true"
+              pagination-clickable="true"
+              navigation="true"
+              space-between="30"
+              centered-slides="true"
+              autoplay-delay="2500"
+              autoplay-disable-on-interaction="false"
+            >
+              <swiper-slide>
+                <div class="img-new-container"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image" class="img-new"></div>
+                <h2 class="title-new">produit 1</h2>
+                <div class="btn-price-new-container">
+                    <h3 class="price-new">1€</h2>
+                    <a href="#" class="btn-new">Acheter</a>
+                </div>
+              </swiper-slide>
+              <swiper-slide>
+                <div class="img-new-container"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image" class="img-new"></div>
+                <h2 class="title-new">produit 2</h2>
+                <div class="btn-price-new-container">
+                    <h3 class="price-new">2€</h2>
+                    <a href="#" class="btn-new">Acheter</a>
+                </div>
+              </swiper-slide>
+              <swiper-slide>
+                <div class="img-new-container"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image" class="img-new"></div>
+                <h2 class="title-new">produit 3</h2>
+                <div class="btn-price-new-container">
+                    <h3 class="price-new">3€</h2>
+                    <a href="#" class="btn-new">Acheter</a>
+                </div>
+              </swiper-slide>
+              <swiper-slide>
+                <div class="img-new-container"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image" class="img-new"></div>
+                <h2 class="title-new">produit 4</h2>
+                <div class="btn-price-new-container">
+                    <h3 class="price-new">4€</h2>
+                    <a href="#" class="btn-new">Acheter</a>
+                </div>
+              </swiper-slide>
+              <swiper-slide>
+                <div class="img-new-container"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image" class="img-new"></div>
+                <h2 class="title-new">produit 5</h2>
+                <div class="btn-price-new-container">
+                    <h3 class="price-new">5€</h2>
+                    <a href="#" class="btn-new">Acheter</a>
+                </div>
+              </swiper-slide>
+              <swiper-slide>
+                <div class="img-new-container"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image" class="img-new"></div>
+                <h2 class="title-new">produit 6</h2>
+                <div class="btn-price-new-container">
+                    <h3 class="price-new">6€</h2>
+                    <a href="#" class="btn-new">Acheter</a>
+                </div>
+              </swiper-slide>
+              <swiper-slide>
+                <div class="img-new-container"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image" class="img-new"></div>
+                <h2 class="title-new">produit 7</h2>
+                <div class="btn-price-new-container">
+                    <h3 class="price-new">7€</h2>
+                    <a href="#" class="btn-new">Acheter</a>
+                </div>
+              </swiper-slide>
+              <swiper-slide>
+                <div class="img-new-container"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image" class="img-new"></div>
+                <h2 class="title-new">produit 8</h2>
+                <div class="btn-price-new-container">
+                    <h3 class="price-new">8€</h2>
+                    <a href="#" class="btn-new">Acheter</a>
+                </div>
+              </swiper-slide>
+              <swiper-slide>
+                <div class="img-new-container"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image" class="img-new"></div>
+                <h2 class="title-new">produit 9</h2>
+                <div class="btn-price-new-container">
+                    <h3 class="price-new">9€</h2>
+                    <a href="#" class="btn-new">Acheter</a>
+                </div>
+              </swiper-slide>
+
+
+              <div class="autoplay-progress" slot="container-end">
+                <svg viewBox="0 0 48 48">
+                  <circle cx="24" cy="24" r="20"></circle>
+                </svg>
+                <span></span>
+              </div>
+            </swiper-container>
+
+      </section>
+    </header>
+
+    <main>{% block content %} {% endblock %}</main>
+
+    <footer>
+        <section class="services">
+            <div class="service">
+                <i class="fa-solid fa-truck"></i>
+                <h3>LIVRAISON OFFERTE</h3>
+                <p>Dès 89€ d'achat, en point relais en France métropolitaine.</p>
+            </div>
+            <div class="service">
+                <i class="fa-solid fa-truck"></i>
+                <h3>PAIEMENT EN 3 FOIS SANS FRAIS</h3>
+                <p>Faites-vous plaisir et payez en 3 fois sans frais votre commande avec Boutikapay.</p>
+            </div>
+            <div class="service">
+                <i class="fa-solid fa-truck"></i>
+                <h3>LIVRAISON INTERNATIONALE</h3>
+                <p>Expédition partout dans le monde. Tarifs disponibles à l'étape livraison.</p>
+            </div>
+        </section>
+      <section class="logo">
+        <img src="/img/Image 16 avr. 2025, 21_53_26-min.png" alt="logo" />
+        <b>LaBoutika</b>
+      </section>
+      <section class="adress">
+        <p>Address:
+            123 lorem ipsum dolor
+            lorem </p>
+            <div>Assistance téléphonique: <a href="#">+33789123456</a></div>
+      </section>
+      <section class="social-media">
+        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-pinterest"></i></a>
+      </section>
+
+      <p>© 2025 La Boutika.</p>
+    </footer>
+
+    {% endblock %}
+  </body>
 </html>
