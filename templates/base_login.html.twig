@@ -20,8 +20,6 @@
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
     />
 
-    <script src="{{ asset('js/menu.js') }}"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
     <script>
       const progressCircle = document.querySelector(".autoplay-progress svg");
@@ -36,10 +34,6 @@
     </script>
   </head>
   <body>
-    {% include 'partials/_header.html.twig' %}
-    <main>{% block content %}{% endblock %}</main>
-
-    {% include 'partials/_footer.html.twig' %}
-
+    <main>{% block body %}{% endblock %}</main>
   </body>
 </html>

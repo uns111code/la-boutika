@@ -26,14 +26,15 @@ class Order
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'orders')]
-    private ?User $user = null;
 
     /**
      * @var Collection<int, OrderProduct>
      */
     #[ORM\OneToMany(targetEntity: OrderProduct::class, mappedBy: 'orders')]
     private Collection $orderProducts;
+
+    #[ORM\ManyToOne(inversedBy: 'orders')]
+    private ?User $User = null;
 
     public function __construct()
     {
@@ -81,17 +82,6 @@ class Order
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, OrderProduct>
@@ -119,6 +109,18 @@ class Order
                 $orderProduct->setOrders(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->User;
+    }
+
+    public function setUser(?User $User): static
+    {
+        $this->User = $User;
 
         return $this;
     }

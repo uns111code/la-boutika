@@ -22,6 +22,7 @@ class ShoppingCartProduct
     #[ORM\ManyToOne(inversedBy: 'shoppingCartProducts')]
     private ?Product $product = null;
 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,4 +63,5 @@ class ShoppingCartProduct
 
         return $this;
     }
+
 }

@@ -10,7 +10,7 @@
     <section class="product-list">
         {% for product in products %}
         <article>
-            <div class="img-new-container"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image" class="img-new"></div>
+            <a class="img-new-container" href="{{ path('app_product_show', {'id': product.id}) }}"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image" class="img-new"></a>
                 <h2 class="title-new">{{ product.name }}</h2>
             <div class="btn-price-new-container">
                 <h3 class="price-new">{{ product.price }}</h2>

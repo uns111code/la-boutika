@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+
 // use App\Service\ProductService;
 
 #[Route('/product')]
@@ -25,8 +27,9 @@ final class ProductController extends AbstractController
     //         'products' => $productRepository->findAll(),
     //     ]);
     // }
-
+    
     #[Route(name: 'app_product_index', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
     public function index(ProductRepository $productRepository): Response
     {
         return $this->render('product/index.html.twig', [
@@ -90,5 +93,25 @@ final class ProductController extends AbstractController
         }
 
         return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+
+
+
+
+
+
+
+
+
+    #[Route('/category/{id}', name: 'product_by_category')]
+    public function productsByCategory(int $id, ProductRepository $productRepository): Response
+    {
+        $products = $productRepository->findByCategoryId($id);
+
+        return $this->render('product/list.html.twig', [
+            'products' => $products,
+        ]);
     }
 }
