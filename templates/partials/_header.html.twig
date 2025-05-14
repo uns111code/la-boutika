@@ -1,3 +1,4 @@
+
 <header>
   <section class="logo">
     <a href="">
@@ -16,17 +17,17 @@
     <nav>
       <div class="search-bar">
         <i class="open-menu fa-solid fa-bars"></i>
-        <ul class="menu-list">
+        <!-- <ul class="menu-list">
             <i class="close-menu fa-solid fa-xmark"></i>
             <li><a href="{{ path('app_product_index') }}">Home</a></li>
             <li><a href="{{ path('app_category_index') }}">category</a></li>
             <li><a href="{{ path('app_brand_index') }}">brands</a></li>
-          </ul>
-        <!-- <select name="catag" id="catag">
+        </ul> -->
+        <select name="catag" id="catag">
             <option value="catag1">All Catagory</option>
             <option value="catag2">catag2</option>
             <option value="catag3">catag3</option>
-          </select> -->
+          </select>
         <div class="search">
           <input type="text" placeholder="Rechercher" />
 
@@ -57,99 +58,55 @@
     </nav>
   </section>
   <section class="slider">
-    <!-- Slider main container -->
-    <swiper-container class="mySwiper" pagination="true" pagination-clickable="true" navigation="true"
-      space-between="30" centered-slides="true" autoplay-delay="2500" autoplay-disable-on-interaction="false">
-      <swiper-slide>
-        <div class="img-new-container"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image"
-            class="img-new"></div>
-        <h2 class="title-new">produit 1</h2>
-        <div class="btn-price-new-container">
-          <h3 class="price-new">1€</h2>
-            <a href="#" class="btn-new">Acheter</a>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="img-new-container"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image"
-            class="img-new"></div>
-        <h2 class="title-new">produit 2</h2>
-        <div class="btn-price-new-container">
-          <h3 class="price-new">2€</h2>
-            <a href="#" class="btn-new">Acheter</a>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="img-new-container"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image"
-            class="img-new"></div>
-        <h2 class="title-new">produit 3</h2>
-        <div class="btn-price-new-container">
-          <h3 class="price-new">3€</h2>
-            <a href="#" class="btn-new">Acheter</a>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="img-new-container"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image"
-            class="img-new"></div>
-        <h2 class="title-new">produit 4</h2>
-        <div class="btn-price-new-container">
-          <h3 class="price-new">4€</h2>
-            <a href="#" class="btn-new">Acheter</a>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="img-new-container"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image"
-            class="img-new"></div>
-        <h2 class="title-new">produit 5</h2>
-        <div class="btn-price-new-container">
-          <h3 class="price-new">5€</h2>
-            <a href="#" class="btn-new">Acheter</a>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="img-new-container"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image"
-            class="img-new"></div>
-        <h2 class="title-new">produit 6</h2>
-        <div class="btn-price-new-container">
-          <h3 class="price-new">6€</h2>
-            <a href="#" class="btn-new">Acheter</a>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="img-new-container"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image"
-            class="img-new"></div>
-        <h2 class="title-new">produit 7</h2>
-        <div class="btn-price-new-container">
-          <h3 class="price-new">7€</h2>
-            <a href="#" class="btn-new">Acheter</a>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="img-new-container"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image"
-            class="img-new"></div>
-        <h2 class="title-new">produit 8</h2>
-        <div class="btn-price-new-container">
-          <h3 class="price-new">8€</h2>
-            <a href="#" class="btn-new">Acheter</a>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="img-new-container"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image"
-            class="img-new"></div>
-        <h2 class="title-new">produit 9</h2>
-        <div class="btn-price-new-container">
-          <h3 class="price-new">9€</h2>
-            <a href="#" class="btn-new">Acheter</a>
-        </div>
-      </swiper-slide>
-
-
-      <div class="autoplay-progress" slot="container-end">
-        <svg viewBox="0 0 48 48">
-          <circle cx="24" cy="24" r="20"></circle>
-        </svg>
-        <span></span>
-      </div>
-    </swiper-container>
-
+      <!-- Swiper -->
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">Slide 1</div>
+      <div class="swiper-slide">Slide 2</div>
+      <div class="swiper-slide">Slide 3</div>
+      <div class="swiper-slide">Slide 4</div>
+      <div class="swiper-slide">Slide 5</div>
+      <div class="swiper-slide">Slide 6</div>
+      <div class="swiper-slide">Slide 7</div>
+      <div class="swiper-slide">Slide 8</div>
+      <div class="swiper-slide">Slide 9</div>
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+    <div class="autoplay-progress">
+      <svg viewBox="0 0 48 48">
+        <circle cx="24" cy="24" r="20"></circle>
+      </svg>
+      <span></span>
+    </div>
+  </div>
+  <!-- Initialize Swiper -->
+  <script>
+    const progressCircle = document.querySelector(".autoplay-progress svg");
+    const progressContent = document.querySelector(".autoplay-progress span");
+    var swiper = new Swiper(".mySwiper", {
+      spaceBetween: 30,
+      centeredSlides: true,
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev"
+      },
+      on: {
+        autoplayTimeLeft(s, time, progress) {
+          progressCircle.style.setProperty("--progress", 1 - progress);
+          progressContent.textContent = `${Math.ceil(time / 1000)}s`;
+        }
+      }
+    });
+  </script>
   </section>
 </header>

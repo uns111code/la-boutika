@@ -1,25 +1,27 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Product index{% endblock %}
+<link rel="stylesheet" href="{{ asset('css/product.css') }}">
 
 {% block content %}
 
 
-    <h1>Homme</h1>
+<h1>Homme</h1>
 
-    <section class="product-list">
-        {% for product in products %}
-        <article>
-            <a class="img-new-container" href="{{ path('app_product_show', {'id': product.id}) }}"><img src="/img/43_6f037a9a-0592-4f02-9b9f-13f1728ea61b.png" alt="product image" class="img-new"></a>
-                <h2 class="title-new">{{ product.name }}</h2>
-            <div class="btn-price-new-container">
-                <h3 class="price-new">{{ product.price }}</h2>
+<section class="product-list">
+    {% for product in products %}
+    <article>
+        <a class="img-new-container" href="{{ path('app_product_show', {'id': product.id}) }}">
+            <img src="{{ product.productImages[0].imageUrl }}" alt="product image" class="img-new"></a>
+        <h2 class="title-new">{{ product.name }}</h2>
+        <div class="btn-price-new-container">
+            <h3 class="price-new">{{ product.price }}</h2>
                 <a href="#" class="btn-new">Acheter</a>
-            </div>
-        </article>
-        {% endfor %}
-    </section>
-    <!-- <table class="table">
+        </div>
+    </article>
+    {% endfor %}
+</section>
+<!-- <table class="table">
         <thead>
             <tr>
                 <th>Id</th>

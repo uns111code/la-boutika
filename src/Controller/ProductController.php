@@ -33,7 +33,7 @@ final class ProductController extends AbstractController
     public function index(ProductRepository $productRepository): Response
     {
         return $this->render('product/index.html.twig', [
-            'products' => $productRepository->findAll(),
+            'products' => $productRepository->findWithPictures(),
         ]);
     }
 
@@ -105,12 +105,12 @@ final class ProductController extends AbstractController
 
 
 
-    #[Route('/category/{id}', name: 'product_by_category')]
+    #[Route('/category/{id}', name: 'product_by_category')] 
     public function productsByCategory(int $id, ProductRepository $productRepository): Response
     {
         $products = $productRepository->findByCategoryId($id);
 
-        return $this->render('product/list.html.twig', [
+        return $this->render('product/by_category.html.twig', [
             'products' => $products,
         ]);
     }
