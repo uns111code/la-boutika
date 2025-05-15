@@ -29,7 +29,7 @@ final class ProductController extends AbstractController
     // }
     
     #[Route(name: 'app_product_index', methods: ['GET'])]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_ADMIN')]
     public function index(ProductRepository $productRepository): Response
     {
         return $this->render('product/index.html.twig', [

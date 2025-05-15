@@ -62,29 +62,36 @@
     </nav>
   </section>
   <section class="slider">
-      <!-- Swiper -->
-  <div class="swiper mySwiper">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">Slide 1</div>
-      <div class="swiper-slide">Slide 2</div>
-      <div class="swiper-slide">Slide 3</div>
-      <div class="swiper-slide">Slide 4</div>
-      <div class="swiper-slide">Slide 5</div>
-      <div class="swiper-slide">Slide 6</div>
-      <div class="swiper-slide">Slide 7</div>
-      <div class="swiper-slide">Slide 8</div>
-      <div class="swiper-slide">Slide 9</div>
-    </div>
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-pagination"></div>
-    <div class="autoplay-progress">
-      <svg viewBox="0 0 48 48">
-        <circle cx="24" cy="24" r="20"></circle>
-      </svg>
-      <span></span>
-    </div>
+<!-- Swiper -->
+<div class="swiper mySwiper">
+  <div class="swiper-wrapper">
+    {% for product in latestProducts %}
+      <div class="swiper-slide">
+        <article>
+          <a href="{{ path('app_product_show', {'id': product.id}) }} class="img-new-container" ">
+            <img src="{{ product.productImages[0].imageUrl }}" alt="product image" class="img-new" />
+          </a>
+          <h2 class="title-new">{{ product.name }}</h2>
+          <div class="btn-price-new-container">
+            <h3 class="price-new">{{ product.price }} €</h3>
+            <a href="{{ path('app_product_show', {'id': product.id}) }} class="btn-new">Acheter</a>
+          </div>
+      </article>
+      </div>
+    {% endfor %}
   </div>
+
+  <!-- Controls -->
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-pagination"></div>
+  <div class="autoplay-progress">
+    <svg viewBox="0 0 48 48">
+      <circle cx="24" cy="24" r="20"></circle>
+    </svg>
+    <span></span>
+  </div>
+</div>
   <!-- Initialize Swiper -->
   <script>
     const progressCircle = document.querySelector(".autoplay-progress svg");

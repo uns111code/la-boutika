@@ -49,4 +49,15 @@ class ProductRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findLatestWithImages(int $limit = 5): array
+{
+    return $this->createQueryBuilder('p')
+        ->leftJoin('p.productImages', 'pi')
+        ->addSelect('pi')
+        ->orderBy('p.createdAt', 'DESC')
+        ->setMaxResults($limit)
+        ->getQuery()
+        ->getResult();
+}
 }

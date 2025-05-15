@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
   gap: 5rem;
   padding: 5rem 2rem;
 }
@@ -11,12 +10,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50rem
+  width: 50rem;
+  height: 20rem;
 }
 
 .image-container {
   height: 20rem;
   width: 50%;
+  height: 100%;
 }
 
 .title-link {
@@ -26,4 +27,11 @@
   justify-content: center;
   align-items: center;
   gap: 5rem;
+}
+
+.categories-container a {
+      padding: 0.5rem 1rem;
+      background-color: var(--color-quinary);
+      color: var(--color-secondary);
+      border-radius: var(--border-radius);
 }

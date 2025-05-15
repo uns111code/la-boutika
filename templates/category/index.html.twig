@@ -16,8 +16,10 @@
             <div class="image-container"><img src="{{ category.categoryImage }}" alt=""></div>
             <div class="title-link">
                 <h2 class="title-category">{{ category.name }}</h2>
-                <a href="{{ path('product_by_category', {'id': category.id}) }}" class="link-category">Découvrir</a>
+                <div>
+                    <a href="{{ path('product_by_category', {'id': category.id}) }}" class="link-category">Découvrir</a>
                 <a href="{{ path('app_category_edit', {'id': category.id}) }}">modifier</a>
+                </div>
             </div>
         </section>
         {% else %}
