@@ -146,6 +146,37 @@ i.fa-bars {
 
 
 
+  .menu-list {
+  position: absolute;
+  top: 0;
+  left: -25%;
+  background-color: var(--color-tertiary);
+  height: 100vh;
+  width: 15rem;
+  transition: left .5s ease-in-out;
+  font-size: 25px;
+  padding: 2rem;
+  line-height: 3rem;
+}
+.open {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+
+.close-menu {
+  text-align: right;
+  width: 100%;
+}
+
+
+
+
+
+
+
+
 
 @media screen and (min-width: 1024px) {
     nav {

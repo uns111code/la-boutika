@@ -1,7 +1,7 @@
 
 <header>
-  <section class="logo">
-    <a href="">
+  <section>
+    <a class="logo" href="{{ path('app_category_index') }}">
       <svg width="111" height="111" viewBox="0 0 111 111" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M41.625 46.25V27.75C41.625 24.0701 43.0868 20.541 45.6889 17.9389C48.2909 15.3368 51.8201 13.875 55.5 13.875C59.1799 13.875 62.709 15.3368 65.3111 17.9389C67.9131 20.541 69.375 24.0701 69.375 27.75V46.25M83.25 37L87.4911 92.1439C87.5402 92.7793 87.4574 93.4181 87.2479 94.02C87.0384 94.622 86.7068 95.1742 86.2738 95.6419C85.8408 96.1096 85.3159 96.4828 84.7318 96.738C84.1478 96.9932 83.5173 97.125 82.88 97.125H28.12C27.4826 97.125 26.8521 96.9932 26.2681 96.738C25.6841 96.4828 25.1591 96.1096 24.7261 95.6419C24.2931 95.1742 23.9615 94.622 23.752 94.02C23.5426 93.4181 23.4598 92.7793 23.5088 92.1439L27.75 37H83.25Z"
@@ -10,24 +10,28 @@
           d="M50.2526 59.7272C50.2707 59.4443 50.3679 59.1722 50.533 58.9418C50.6982 58.7114 50.9247 58.5319 51.1867 58.4239C51.4488 58.3159 51.7359 58.2835 52.0154 58.3306C52.295 58.3777 52.5557 58.5022 52.7679 58.6901L66.6196 70.9772C67.6274 71.8709 67.0539 73.5385 65.7079 73.622L61.369 73.8879L64.2811 80.8465C64.5648 81.5249 64.5686 82.288 64.2916 82.9692C64.0147 83.6504 63.4794 84.1944 62.8028 84.4823L61.5945 84.9974C61.2576 85.1409 60.8957 85.2166 60.5295 85.22C60.1632 85.2235 59.8 85.1546 59.4604 85.0174C59.1208 84.8802 58.8117 84.6774 58.5506 84.4205C58.2896 84.1636 58.0818 83.8578 57.9392 83.5205L54.8406 76.1958L51.607 78.9895C50.5909 79.8665 49.0207 79.087 49.1056 77.7479L50.2526 59.7272Z"
           fill="white" />
       </svg>
+      <b>LaBoutika</b>
     </a>
-    <b>LaBoutika</b>
   </section>
   <section class="menu">
     <nav>
       <div class="search-bar">
-        <i class="open-menu fa-solid fa-bars"></i>
-        <!-- <ul class="menu-list">
+        <div class="open-menu"><i class="fa-solid fa-bars"></i></div>
+        <ul class="menu-list">
             <i class="close-menu fa-solid fa-xmark"></i>
             <li><a href="{{ path('app_product_index') }}">Home</a></li>
             <li><a href="{{ path('app_category_index') }}">category</a></li>
             <li><a href="{{ path('app_brand_index') }}">brands</a></li>
-        </ul> -->
+        </ul>
         <select name="catag" id="catag">
-            <option value="catag1">All Catagory</option>
-            <option value="catag2">catag2</option>
-            <option value="catag3">catag3</option>
-          </select>
+          <option value="">Choisir une catégorie</option>
+          {% for category in categories %}
+            <option value="{{ path('product_by_category', {'id': category.id}) }}">
+              {{ category.name }}
+            </option>
+          {% endfor %}
+        </select>
+
         <div class="search">
           <input type="text" placeholder="Rechercher" />
 
@@ -51,7 +55,7 @@
           </div>
           <div class="user">
             <i class="fa-solid fa-user"></i>
-            <span>Se connecter</span>
+            <a href="{{ path('app_login') }}">Se connecter</a>
           </div>
         </div>
       </div>
