@@ -1,38 +1,75 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>{% block title %}La Boutika{% endblock %}</title>
-    <script
-      src="https://kit.fontawesome.com/fdc9ecfad2.js"
-      crossorigin="anonymous"
-    ></script>
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>"
-    />
-    {% block stylesheets %} {% endblock %} {% block javascripts %} 
-    {# JS Swiper #}
-      <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-      <script src="{{ asset('js/menu.js') }}" defer></script>
-      <script src="{{ asset('js/category.js') }}" defer></script>
-    {% endblock %}
 
-    <link rel="stylesheet" href="{{ asset('css/_header.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/_footer.css') }}">
-    {# CSS Swiper #}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<head>
+  <meta charset="UTF-8" />
+  <title>{% block title %}La Boutika{% endblock %}</title>
+  <script src="https://kit.fontawesome.com/fdc9ecfad2.js" crossorigin="anonymous"></script>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>" />
+  {% block stylesheets %} {% endblock %} {% block javascripts %}
+  {# JS Swiper #}
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="{{ asset('js/menu.js') }}" defer></script>
+  <script src="{{ asset('js/category.js') }}" defer></script>
+  <script src="{{ asset('js/cart.js') }}" defer></script>
+  {% endblock %}
+
+  <link rel="stylesheet" href="{{ asset('css/_header.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/_footer.css') }}">
+  {# CSS Swiper #}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 
+
+
+
+</head>
+
+<body>
+  {% include 'partials/_header.html.twig' %}
+  <main>{% block content %}{% endblock %}</main>
+  {% include 'partials/_footer.html.twig' %}
+  <!-- <a href="{{ path('shopping_cart_index') }}">
+    🛒 Panier (<span id="cart-count">0</span>)
+  </a> -->
+
+  <script>
+        console.log('Cart counter script loaded');
     
+    function updateCartCount() {
+        fetch('/panier/compteur')
+            .then(response => response.json())
+            .then(data => {
+                const cartCountElement = document.getElementById('cart-count');
+                if (cartCountElement) {
+                    cartCountElement.textContent = data.count;
+                }
+            });
+    }
 
+    // Mettre à jour après ajout au panier
+    document.getElementById('add-to-cart').addEventListener('click', function () {
+        const productId = this.dataset.productId;
 
-  </head>
-  <body>
-    {% include 'partials/_header.html.twig' %}
-    <main>{% block content %}{% endblock %}</main>
-    {% include 'partials/_footer.html.twig' %}
+        fetch(`/panier/ajouter/${productId}`, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('flash-message').innerHTML =
+                `<div class="alert alert-success">${data.message}</div>`;
+            updateCartCount(); // ✅ Mise à jour du compteur
+        });
+    });
 
-  </body>
+    // Facultatif : mettre à jour au chargement de la page
+    updateCartCount();
+  </script>
+</body>
+
 </html>

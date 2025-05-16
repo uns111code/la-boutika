@@ -1,4 +1,3 @@
-
 <header>
   <section>
     <a class="logo" href="{{ path('app_category_index') }}">
@@ -18,17 +17,17 @@
       <div class="search-bar">
         <div class="open-menu"><i class="fa-solid fa-bars"></i></div>
         <ul class="menu-list">
-            <i class="close-menu fa-solid fa-xmark"></i>
-            <li><a href="{{ path('app_product_index') }}">Home</a></li>
-            <li><a href="{{ path('app_category_index') }}">category</a></li>
-            <li><a href="{{ path('app_brand_index') }}">brands</a></li>
+          <i class="close-menu fa-solid fa-xmark"></i>
+          <li><a href="{{ path('app_product_index') }}">Home</a></li>
+          <li><a href="{{ path('app_category_index') }}">category</a></li>
+          <li><a href="{{ path('app_brand_index') }}">brands</a></li>
         </ul>
         <select name="catag" id="catag">
           <option value="">Choisir une catégorie</option>
           {% for category in categories %}
-            <option value="{{ path('product_by_category', {'id': category.id}) }}">
-              {{ category.name }}
-            </option>
+          <option value="{{ path('product_by_category', {'id': category.id}) }}">
+            {{ category.name }}
+          </option>
           {% endfor %}
         </select>
 
@@ -43,7 +42,11 @@
       </div>
       <div class="lang-cart-user">
         <div class="flag-lang">
-          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36"><path fill="#ed2939" d="M36 27a4 4 0 0 1-4 4h-8V5h8a4 4 0 0 1 4 4z"/><path fill="#002495" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5z"/><path fill="#eee" d="M12 5h12v26H12z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
+            <path fill="#ed2939" d="M36 27a4 4 0 0 1-4 4h-8V5h8a4 4 0 0 1 4 4z" />
+            <path fill="#002495" d="M4 5a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h8V5z" />
+            <path fill="#eee" d="M12 5h12v26H12z" />
+          </svg>
           <select name="lang" id="lang" class="lang">
             <option value="english">Anglais</option>
             <option value="French"> Français</option>
@@ -51,7 +54,11 @@
         </div>
         <div class="cart-user">
           <div class="cart">
-            <i class="fa-solid fa-cart-shopping"></i><span>Panier</span>
+            
+            <i class="fa-solid fa-cart-shopping"></i>
+            <a href="{{ path('shopping_cart_index') }}">
+              Panier (<span id="cart-count">0</span>)
+            </a>
           </div>
           <div class="user">
             <i class="fa-solid fa-user"></i>
@@ -62,62 +69,62 @@
     </nav>
   </section>
   <section class="slider">
-<!-- Swiper -->
-<div class="swiper mySwiper">
-  <div class="swiper-wrapper">
-    {% for product in latestProducts %}
-      <div class="swiper-slide">
-        <article>
-          <a href="{{ path('app_product_show', {'id': product.id}) }} class="img-new-container" ">
-            <img src="{{ product.productImages[0].imageUrl }}" alt="product image" class="img-new" />
-          </a>
-          <h2 class="title-new">{{ product.name }}</h2>
-          <div class="btn-price-new-container">
-            <h3 class="price-new">{{ product.price }} €</h3>
-            <a href="{{ path('app_product_show', {'id': product.id}) }} class="btn-new">Acheter</a>
-          </div>
-      </article>
+    <!-- Swiper -->
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        {% for product in latestProducts %}
+        <div class="swiper-slide">
+          <article>
+            <a href="{{ path('app_product_show', {'id': product.id}) }} class=" img-new-container" ">
+            <img src=" {{ product.productImages[0].imageUrl }}" alt="product image" class="img-new" />
+            </a>
+            <h2 class="title-new">{{ product.name }}</h2>
+            <div class="btn-price-new-container">
+              <h3 class="price-new">{{ product.price }} €</h3>
+              <a href="{{ path('app_product_show', {'id': product.id}) }} class=" btn-new">Acheter</a>
+            </div>
+          </article>
+        </div>
+        {% endfor %}
       </div>
-    {% endfor %}
-  </div>
 
-  <!-- Controls -->
-  <div class="swiper-button-next"></div>
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-pagination"></div>
-  <div class="autoplay-progress">
-    <svg viewBox="0 0 48 48">
-      <circle cx="24" cy="24" r="20"></circle>
-    </svg>
-    <span></span>
-  </div>
-</div>
-  <!-- Initialize Swiper -->
-  <script>
-    const progressCircle = document.querySelector(".autoplay-progress svg");
-    const progressContent = document.querySelector(".autoplay-progress span");
-    var swiper = new Swiper(".mySwiper", {
-      spaceBetween: 30,
-      centeredSlides: true,
-      autoplay: {
-        delay: 2500,
-        disableOnInteraction: false
-      },
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true
-      },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev"
-      },
-      on: {
-        autoplayTimeLeft(s, time, progress) {
-          progressCircle.style.setProperty("--progress", 1 - progress);
-          progressContent.textContent = `${Math.ceil(time / 1000)}s`;
+      <!-- Controls -->
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+      <div class="autoplay-progress">
+        <svg viewBox="0 0 48 48">
+          <circle cx="24" cy="24" r="20"></circle>
+        </svg>
+        <span></span>
+      </div>
+    </div>
+    <!-- Initialize Swiper -->
+    <script>
+      const progressCircle = document.querySelector(".autoplay-progress svg");
+      const progressContent = document.querySelector(".autoplay-progress span");
+      var swiper = new Swiper(".mySwiper", {
+        spaceBetween: 30,
+        centeredSlides: true,
+        autoplay: {
+          delay: 2500,
+          disableOnInteraction: false
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        },
+        on: {
+          autoplayTimeLeft(s, time, progress) {
+            progressCircle.style.setProperty("--progress", 1 - progress);
+            progressContent.textContent = `${Math.ceil(time / 1000)}s`;
+          }
         }
-      }
-    });
-  </script>
+      });
+    </script>
   </section>
 </header>
