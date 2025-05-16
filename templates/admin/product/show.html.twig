@@ -39,9 +39,12 @@
     </tbody>
 </table>
 
-<button id="add-to-cart" data-product-id="{{ product.id }}" class="btn btn-success">
+<!-- <button id="add-to-cart" data-product-id="{{ product.id }}" class="btn btn-success">
     🛒 Ajouter au panier
-</button>
+</button> -->
+<a href="{{ path('shopping_cart_add', { id: product.id }) }}" class="btn btn-success">
+    🛒 Ajouter au panier
+</a>
 
 <div id="flash-message" style="margin-top: 1em;"></div>
 
@@ -50,8 +53,6 @@
 <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
 
 {{ include('product/_delete_form.html.twig') }}
-
-
 
 
 <!-- <a href="{{ path('shopping_cart_add', { id: product.id }) }}" class="btn btn-success">

@@ -12,18 +12,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ShoppingCartController extends AbstractController
 {
-    #[Route('/panier/ajouter/{id}', name: 'shopping_cart_add', methods: ['POST'])]
+    #[Route('/panier/ajouter/{id}', name: 'shopping_cart_add')]
     public function addToCart(
         Product $product,
         ShoppingCartService $shoppingCartService,
         UserInterface $user
-    ): JsonResponse {
+    ): Response {
+        // Ajouter le produit au panier
         $shoppingCartService->addProductToCart($product, $user);
 
-        return new JsonResponse([
-            'success' => true,
-            'message' => '✅ Produit ajouté au panier !',
+        // Ajouter un message flash de succès
+        $this->addFlash('success', '✅ Produit ajouté au panier !');
+
+        // Rediriger vers la page du produit
+        return $this->redirectToRoute('app_product_show', [
+            'id' => $product->getId(),
         ]);
+    
     }
     #[Route('/panier', name: 'shopping_cart_index')]
     public function index(ShoppingCartService $shoppingCartService, UserInterface $user): Response
@@ -42,7 +47,7 @@ class ShoppingCartController extends AbstractController
     {
         $count = $shoppingCartService->getCartItemCount($user);
 
-        return new JsonResponse(['count' => $count]);
+        return new Response("Il y a $count article(s) dans votre panier.");;
     }
 
     // #[Route('/panier/supprimer/{id}', name: 'shopping_cart_remove')]
