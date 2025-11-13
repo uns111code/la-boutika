@@ -17,7 +17,7 @@ class Order
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $status = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
@@ -26,18 +26,19 @@ class Order
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'orders')]
-    private ?User $user = null;
 
     /**
-     * @var Collection<int, OrderItem>
+     * @var Collection<int, OrderProduct>
      */
-    #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'orders')]
-    private Collection $orderItems;
+    #[ORM\OneToMany(targetEntity: OrderProduct::class, mappedBy: 'orders')]
+    private Collection $orderProducts;
+
+    #[ORM\ManyToOne(inversedBy: 'orders')]
+    private ?User $User = null;
 
     public function __construct()
     {
-        $this->orderItems = new ArrayCollection();
+        $this->orderProducts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -81,44 +82,45 @@ class Order
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
-    }
 
     /**
-     * @return Collection<int, OrderItem>
+     * @return Collection<int, OrderProduct>
      */
-    public function getOrderItems(): Collection
+    public function getOrderProducts(): Collection
     {
-        return $this->orderItems;
+        return $this->orderProducts;
     }
 
-    public function addOrderItem(OrderItem $orderItem): static
+    public function addOrderProduct(OrderProduct $orderProduct): static
     {
-        if (!$this->orderItems->contains($orderItem)) {
-            $this->orderItems->add($orderItem);
-            $orderItem->setOrders($this);
+        if (!$this->orderProducts->contains($orderProduct)) {
+            $this->orderProducts->add($orderProduct);
+            $orderProduct->setOrders($this);
         }
 
         return $this;
     }
 
-    public function removeOrderItem(OrderItem $orderItem): static
+    public function removeOrderProduct(OrderProduct $orderProduct): static
     {
-        if ($this->orderItems->removeElement($orderItem)) {
+        if ($this->orderProducts->removeElement($orderProduct)) {
             // set the owning side to null (unless already changed)
-            if ($orderItem->getOrders() === $this) {
-                $orderItem->setOrders(null);
+            if ($orderProduct->getOrders() === $this) {
+                $orderProduct->setOrders(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->User;
+    }
+
+    public function setUser(?User $User): static
+    {
+        $this->User = $User;
 
         return $this;
     }

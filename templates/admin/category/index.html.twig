@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Category index{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/category.css') }}">
+{% endblock %}
+
+
+
+{% block content %}
+
+    <section class="categories-container">
+        <h1>Catégories</h1>
+        {% for category in categories %}
+        <section class="category">
+            <div class="image-container"><img src="{{ category.categoryImage }}" alt=""></div>
+            <div class="title-link">
+                <h2 class="title-category">{{ category.name }}</h2>
+                <div>
+                    <a href="{{ path('product_by_category', {'id': category.id}) }}" class="link-category">Découvrir</a>
+                <a href="{{ path('app_category_edit', {'id': category.id}) }}">modifier</a>
+                </div>
+            </div>
+        </section>
+        {% else %}
+        <div class="category">
+            <h2 class="title-category">No categories found</h2>
+        </div>
+        {% endfor %}
+        <a href="{{ path('app_category_new') }}">Create new</a>
+    </section>
+
+
+
+
+<!-- 
+    <h1>Category index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>CategoryImage</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <td>{{ category.id }}</td>
+                <td>{{ category.name }}</td>
+                <td>{{ category.categoryImage }}</td>
+                <td>
+                    <a href="{{ path('app_category_show', {'id': category.id}) }}">show</a>
+                    <a href="{{ path('app_category_edit', {'id': category.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_category_new') }}">Create new</a> -->
+{% endblock %}

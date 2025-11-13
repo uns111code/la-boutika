@@ -1,0 +1,26 @@
+<h1>Mon panier</h1>
+
+{% if items is not empty %}
+    <table>
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.product.price|number_format(2, ',', ' ') }} €</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ (item.product.price * item.quantity)|number_format(2, ',', ' ') }} €</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Votre panier est vide.</p>
+{% endif %}

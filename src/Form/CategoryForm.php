@@ -13,6 +13,7 @@ class CategoryForm extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('categoryImage')
         ;
     }
 

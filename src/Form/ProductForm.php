@@ -20,7 +20,7 @@ class ProductForm extends AbstractType
             ->add('description')
             ->add('price')
             ->add('stockQuantity')
-            ->add('imageUrl')
+            // ->add('imageUrl')
             ->add('createdAt', null, [
                 'widget' => 'single_text',
             ])

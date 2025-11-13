@@ -10,19 +10,34 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+
+// use App\Service\ProductService;
 
 #[Route('/product')]
 final class ProductController extends AbstractController
 {
+    // #[Route(name: 'app_product_index', methods: ['GET'])]
+    // public function index(ProductRepository $productRepository, ProductService $productService): Response
+    // {
+    //     $prodcutService = $productService->getLatestProducts();
+    //     dd($prodcutService);
+
+    //     return $this->render('product/index.html.twig', [
+    //         'products' => $productRepository->findAll(),
+    //     ]);
+    // }
+    
     #[Route(name: 'app_product_index', methods: ['GET'])]
     public function index(ProductRepository $productRepository): Response
     {
         return $this->render('product/index.html.twig', [
-            'products' => $productRepository->findAll(),
+            'products' => $productRepository->findWithPictures(),
         ]);
     }
 
     #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]   
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $product = new Product();
@@ -45,12 +60,14 @@ final class ProductController extends AbstractController
     #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
     public function show(Product $product): Response
     {
+        
         return $this->render('product/show.html.twig', [
             'product' => $product,
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ProductForm::class, $product);
@@ -69,6 +86,7 @@ final class ProductController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->getPayload()->getString('_token'))) {
@@ -77,5 +95,25 @@ final class ProductController extends AbstractController
         }
 
         return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+
+
+
+
+
+
+
+
+
+    #[Route('/category/{id}', name: 'product_by_category')] 
+    public function productsByCategory(int $id, ProductRepository $productRepository): Response
+    {
+        $products = $productRepository->findByCategoryId($id);
+
+        return $this->render('product/by_category.html.twig', [
+            'products' => $products,
+        ]);
     }
 }

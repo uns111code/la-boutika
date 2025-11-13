@@ -1,0 +1,5 @@
+services:
+    product_service:
+        class: App\Service\ProductService
+        autowire: auto
+        public: true

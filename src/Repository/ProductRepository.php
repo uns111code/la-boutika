@@ -31,13 +31,33 @@ class ProductRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Product
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+       public function findWithPictures()
+       {
+           return $this->createQueryBuilder('p')
+               ->innerJoin('p.productImages', 'pic')
+                ->addSelect('pic')
+               ->getQuery()
+               ->getResult()
+           ;
+       }
+
+    public function findByCategoryId(int $categoryId): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.category = :categoryId')
+            ->setParameter('categoryId', $categoryId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findLatestWithImages(int $limit = 5): array
+{
+    return $this->createQueryBuilder('p')
+        ->leftJoin('p.productImages', 'pi')
+        ->addSelect('pi')
+        ->orderBy('p.createdAt', 'DESC')
+        ->setMaxResults($limit)
+        ->getQuery()
+        ->getResult();
+}
 }

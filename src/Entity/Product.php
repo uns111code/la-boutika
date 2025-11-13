@@ -28,23 +28,14 @@ class Product
     #[ORM\Column(nullable: true)]
     private ?int $stockQuantity = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $imageUrl = null;
-
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    /**
-     * @var Collection<int, ShoppingCart>
-     */
-    #[ORM\ManyToMany(targetEntity: ShoppingCart::class, mappedBy: 'product')]
-    private Collection $shoppingCarts;
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?Category $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Brand $brand = null;
-
-    #[ORM\ManyToOne(inversedBy: 'products')]
-    private ?Category $category = null;
 
     /**
      * @var Collection<int, ProductImage>
@@ -53,16 +44,22 @@ class Product
     private Collection $productImages;
 
     /**
-     * @var Collection<int, OrderItem>
+     * @var Collection<int, OrderProduct>
      */
-    #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'product')]
-    private Collection $orderItems;
+    #[ORM\OneToMany(targetEntity: OrderProduct::class, mappedBy: 'product')]
+    private Collection $orderProducts;
+
+    /**
+     * @var Collection<int, ShoppingCartProduct>
+     */
+    #[ORM\OneToMany(targetEntity: ShoppingCartProduct::class, mappedBy: 'product')]
+    private Collection $shoppingCartProducts;
 
     public function __construct()
     {
-        $this->shoppingCarts = new ArrayCollection();
         $this->productImages = new ArrayCollection();
-        $this->orderItems = new ArrayCollection();
+        $this->orderProducts = new ArrayCollection();
+        $this->shoppingCartProducts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -118,18 +115,6 @@ class Product
         return $this;
     }
 
-    public function getImageUrl(): ?string
-    {
-        return $this->imageUrl;
-    }
-
-    public function setImageUrl(?string $imageUrl): static
-    {
-        $this->imageUrl = $imageUrl;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
@@ -142,29 +127,14 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection<int, ShoppingCart>
-     */
-    public function getShoppingCarts(): Collection
+    public function getCategory(): ?Category
     {
-        return $this->shoppingCarts;
+        return $this->category;
     }
 
-    public function addShoppingCart(ShoppingCart $shoppingCart): static
+    public function setCategory(?Category $category): static
     {
-        if (!$this->shoppingCarts->contains($shoppingCart)) {
-            $this->shoppingCarts->add($shoppingCart);
-            $shoppingCart->addProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeShoppingCart(ShoppingCart $shoppingCart): static
-    {
-        if ($this->shoppingCarts->removeElement($shoppingCart)) {
-            $shoppingCart->removeProduct($this);
-        }
+        $this->category = $category;
 
         return $this;
     }
@@ -177,18 +147,6 @@ class Product
     public function setBrand(?Brand $brand): static
     {
         $this->brand = $brand;
-
-        return $this;
-    }
-
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): static
-    {
-        $this->category = $category;
 
         return $this;
     }
@@ -224,29 +182,59 @@ class Product
     }
 
     /**
-     * @return Collection<int, OrderItem>
+     * @return Collection<int, OrderProduct>
      */
-    public function getOrderItems(): Collection
+    public function getOrderProducts(): Collection
     {
-        return $this->orderItems;
+        return $this->orderProducts;
     }
 
-    public function addOrderItem(OrderItem $orderItem): static
+    public function addOrderProduct(OrderProduct $orderProduct): static
     {
-        if (!$this->orderItems->contains($orderItem)) {
-            $this->orderItems->add($orderItem);
-            $orderItem->setProduct($this);
+        if (!$this->orderProducts->contains($orderProduct)) {
+            $this->orderProducts->add($orderProduct);
+            $orderProduct->setProduct($this);
         }
 
         return $this;
     }
 
-    public function removeOrderItem(OrderItem $orderItem): static
+    public function removeOrderProduct(OrderProduct $orderProduct): static
     {
-        if ($this->orderItems->removeElement($orderItem)) {
+        if ($this->orderProducts->removeElement($orderProduct)) {
             // set the owning side to null (unless already changed)
-            if ($orderItem->getProduct() === $this) {
-                $orderItem->setProduct(null);
+            if ($orderProduct->getProduct() === $this) {
+                $orderProduct->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ShoppingCartProduct>
+     */
+    public function getShoppingCartProducts(): Collection
+    {
+        return $this->shoppingCartProducts;
+    }
+
+    public function addShoppingCartProduct(ShoppingCartProduct $shoppingCartProduct): static
+    {
+        if (!$this->shoppingCartProducts->contains($shoppingCartProduct)) {
+            $this->shoppingCartProducts->add($shoppingCartProduct);
+            $shoppingCartProduct->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShoppingCartProduct(ShoppingCartProduct $shoppingCartProduct): static
+    {
+        if ($this->shoppingCartProducts->removeElement($shoppingCartProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($shoppingCartProduct->getProduct() === $this) {
+                $shoppingCartProduct->setProduct(null);
             }
         }
 

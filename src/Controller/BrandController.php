@@ -6,10 +6,11 @@ use App\Entity\Brand;
 use App\Form\BrandForm;
 use App\Repository\BrandRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/brand')]
 final class BrandController extends AbstractController
@@ -23,6 +24,7 @@ final class BrandController extends AbstractController
     }
 
     #[Route('/new', name: 'app_brand_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $brand = new Brand();
@@ -51,6 +53,7 @@ final class BrandController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_brand_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Brand $brand, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(BrandForm::class, $brand);
@@ -69,6 +72,7 @@ final class BrandController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_brand_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Brand $brand, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$brand->getId(), $request->getPayload()->getString('_token'))) {
